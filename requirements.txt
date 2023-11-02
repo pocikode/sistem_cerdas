@@ -7,10 +7,12 @@ django-compressor==4.4
 django-crontab==0.7.1
 django-extensions==3.2.3
 executing==2.0.1
+gunicorn==21.2.0
 ipython==8.17.2
 jedi==0.19.1
 matplotlib-inline==0.1.6
-mysqlclient @ file:///work/ci_py311/mysqlclient_1676859848044/work
+mysqlclient==2.0.3
+packaging==23.2
 parso==0.8.3
 pexpect==4.8.0
 prompt-toolkit==3.0.39
