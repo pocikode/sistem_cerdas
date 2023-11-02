@@ -1,0 +1,99 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="flex flex-wrap -mx-3">
+        <div class="flex-none w-full max-w-full px-3">
+            <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
+                <div class="flex items-center p-6 pb-0 mb-2 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                    <h6 class="mr-3">Job Tweet {{ job.start_time }} - {{ job.end_time }}</h6>
+                    {% if job.status == 'WAITING' %}
+                        <span class="bg-gradient-to-tl from-slate-600 to-slate-300 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">WAITING</span>
+                    {% elif job.status == 'PROCESS' %}
+                        <span class="bg-gradient-to-tl from-blue-600 to-blue-300 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">PROCESS</span>
+                    {% else %}
+                        <span class="bg-gradient-to-tl from-green-600 to-green-300 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">DONE</span>
+                    {% endif %}
+                </div>
+                <div class="flex-auto px-0 pt-0 pb-2">
+                    <div class="p-0 overflow-x-auto">
+                        <form class="px-6" action="{% url 'harvest:create' %}" method="post">
+                            {% csrf_token %}
+                            <div class="mb-6">
+                                <label for="accounts" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Twitter Account</label>
+                                <input id="accounts" name="account" value="{{ job.account.username }} - {{ job.account.auth_token }}" disabled
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="mb-6">
+                                <label for="keyword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Twitter Search Keyword</label>
+                                <input type="text" id="keyword" name="keyword"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       value="{{ job.keyword }}"
+                                       placeholder="pilpres 2024" disabled>
+                            </div>
+                            <div class="mb-6">
+                                <label for="limit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Limit</label>
+                                <input type="number" id="limit" name="limit"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       value="{{ job.limit }}" disabled>
+                            </div>
+                            <div class="mb-6">
+                                <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start DateTime</label>
+                                <input type="text" id="start_time" name="start_time"
+                                       value="{{ job.start_time.isoformat }}" disabled
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="mb-6">
+                                <label for="end_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End DateTime</label>
+                                <input type="text" id="end_time" name="end_time" value="{{ job.end_time.isoformat }}" disabled
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="mb-6">
+                                <h6>Log:</h6>
+                                <pre><code id="log-text" class="language-plaintext max-h-[500px]">{{ latest_content }}</code></pre>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/languages/plaintext.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+      let currentPosition = "{{ pos }}"
+
+      async function fetchLog() {
+        const url = "{% url 'harvest:show' job.id %}" + '?last_position=' + currentPosition
+        const resp = await fetch(url, {
+          method: 'GET',
+          mode: 'same-origin',
+          cache: 'no-cache',
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+
+        return resp.json()
+      }
+
+      function fetchL() {
+        fetchLog().then(data => {
+          console.log(data)
+          currentPosition = data.pos
+
+          const el = document.getElementById('log-text')
+          el.append(data.latest_content)
+
+          if (data.complete) {
+            clearInterval(fetchInterval)
+          }
+        })
+      }
+
+      let fetchInterval = setInterval(fetchL, 1000)
+    </script>
+{% endblock %}

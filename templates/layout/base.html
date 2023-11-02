@@ -1,0 +1,85 @@
+{% load compress %}
+{% load static %}
+
+<!--
+=========================================================
+* Soft UI Dashboard Tailwind - v1.0.5
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-tailwind
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/apple-icon.png' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+    <title>Django - Soft UI Dashboard Tailwind</title>
+
+    <!--     Fonts and icons     -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+
+    {% compress css %}
+        <!-- Nucleo Icons -->
+        <link rel="stylesheet" href="{% static 'css/nucleo-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nucleo-svg.css' %}">
+        <!-- Main Styling -->
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% endcompress %}
+
+</head>
+
+<body class="m-0 font-sans text-base antialiased font-normal leading-default bg-gray-50 text-slate-500">
+    {% include 'layout/sidebar.html' %}
+
+    <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
+        <!-- Navbar -->
+        {% include 'layout/navbar.html' %}
+
+        <div class="w-full px-6 py-6 mx-auto">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    {% include 'layout/footer.html' %}
+
+    {% compress js %}
+        <!-- plugin for scrollbar  -->
+        <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}" async></script>
+        <!-- main script file  -->
+        <script src="{% static 'js/soft-ui-dashboard-tailwind.js' %}" async></script>
+    {% endcompress %}
+
+    <!-- github button -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- flowbite -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Additional Scripts -->
+    {% block js %}{% endblock %}
+</body>
+
+</html>
