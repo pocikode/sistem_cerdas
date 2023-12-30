@@ -78,3 +78,58 @@ function loadStylesheet(FILE_URL) {
 
   document.head.appendChild(dynamicStylesheet);
 }
+
+// SENTIMENT
+var options = {
+  // colors: ['#F44336', '#E91E63', '#9C27B0'],
+  series: [{
+  name: 'Anies-Imin',
+  data: [6346, 24836, 15868]
+}, {
+  name: 'Prabowo-Gibran',
+  data: [9674, 29113, 9847]
+}, {
+  name: 'Ganjar-Mahfud',
+  data: [8142, 18750, 8736]
+}],
+  chart: {
+  type: 'bar',
+  height: 350
+},
+plotOptions: {
+  bar: {
+    horizontal: false,
+    columnWidth: '55%',
+    endingShape: 'rounded'
+  },
+},
+dataLabels: {
+  enabled: false
+},
+stroke: {
+  show: true,
+  width: 2,
+  colors: ['transparent']
+},
+xaxis: {
+  categories: ['Negative', 'Neutral', 'Positive'],
+},
+yaxis: {
+  title: {
+    text: 'Tweets'
+  }
+},
+fill: {
+  opacity: 1
+},
+tooltip: {
+  y: {
+    formatter: function (val) {
+      return "Tweets"
+    }
+  }
+}
+};
+
+var chart = new ApexCharts(document.querySelector("#sentiment-chart"), options);
+chart.render();

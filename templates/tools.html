@@ -1,0 +1,47 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="flex flex-col my-6 mx-4 rounded-2xl shadow-xl shadow-gray-200">
+    <div class="overflow-x-auto rounded-2xl">
+        <div class="inline-block min-w-full align-middle">
+            <div class="overflow-hidden p-5 shadow-lg">
+                <form class="mt-8 space-y-3" action="#" id="form-tools">
+                    <div>
+                        <label for="tweet" class="block mb-2 text-sm font-medium text-gray-900">Tweet to Check</label>
+                        <input type="text" name="tweet" id="tweet" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5" placeholder="Lorem Ipsum..." required>
+                    </div>
+                    <button type="submit" class="py-3 px-5 w-full text-base font-medium text-center text-white bg-gradient-to-br from-pink-500 to-voilet-500 hover:scale-[1.02] shadow-md shadow-gray-300 transition-transform rounded-lg sm:w-auto">Check</button>
+                </form>
+
+                <div class="w-full mt-3 hidden" id="loading-wrapper">
+                    <div aria-label="Loading..." role="status" class="flex items-center space-x-2">
+                        <svg class="h-10 w-10 animate-spin stroke-gray-500" viewBox="0 0 256 256">
+                            <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+                            <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="24"></line>
+                            <line x1="224" y1="128" x2="192" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                            </line>
+                            <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="24"></line>
+                            <line x1="128" y1="224" x2="128" y2="192" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                            </line>
+                            <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="24"></line>
+                            <line x1="32" y1="128" x2="64" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+                            <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+                            </line>
+                        </svg>
+                        <span class="text-xl font-medium text-gray-500">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="mt-3 hidden" id="sentiment-result-wrapper">
+                    <h3 class="text-xl font-medium text-gray-600">Sentiment: <span id="sentiment-result"></span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

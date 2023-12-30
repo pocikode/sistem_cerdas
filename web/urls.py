@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import index
+from .views import index, tools
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', index, name='index'),
+    path('', index, name='home'),
+    path('tools', tools, name='tools'),
     path('harvest/', include('harvest.urls'))
 ]
