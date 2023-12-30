@@ -1,3 +1,4 @@
+from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
@@ -8,8 +9,20 @@ from .models import Account, Job
 
 # Create your views here.
 def index(request):
-    jobs = Job.objects.all()
-    return render(request, 'crawler/index.html', {'jobs': jobs})
+    jobs = Job.objects.order_by('-id')
+
+    # Pagination
+    paginator = Paginator(jobs, 10)
+    page = request.GET.get('page')
+
+    try:
+        items = paginator.page(page)
+    except PageNotAnInteger:
+        items = paginator.page(1)
+    except EmptyPage:
+        items = paginator.page(paginator.num_pages)
+
+    return render(request, 'crawler/index.html', {'paginator': paginator, 'jobs': items})
 
 
 def create(request):

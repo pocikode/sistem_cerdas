@@ -1473,6 +1473,11 @@ h6 {
   margin-bottom: 0.25rem;
 }
 
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -1746,6 +1751,10 @@ h6 {
   height: 2.5rem;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-14 {
   height: 3.5rem;
 }
@@ -1964,6 +1973,10 @@ h6 {
 
 .w-10 {
   width: 2.5rem;
+}
+
+.w-12 {
+  width: 3rem;
 }
 
 .w-2 {
@@ -2963,6 +2976,11 @@ h6 {
 .bg-gray-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 122 85 / var(--tw-bg-opacity));
 }
 
 .bg-inherit {
@@ -4231,6 +4249,10 @@ h6 {
 
 .ease-\[ease\] {
   transition-timing-function: ease;
+}
+
+.ease-in {
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
 .ease-in-out {
@@ -6165,6 +6187,10 @@ h6 {
 
   .md\:mr-0 {
     margin-right: 0px;
+  }
+
+  .md\:flex {
+    display: flex;
   }
 
   .md\:flex-row {

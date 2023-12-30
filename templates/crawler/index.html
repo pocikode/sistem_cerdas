@@ -61,6 +61,31 @@
                         </table>
                     </div>
                 </div>
+
+                <nav class="mb-3 px-3 flex flex-row items-center justify-between">
+                    <span class="current text-sm text-neutral-600">
+                        Page {{ jobs.number }} of {{ jobs.paginator.num_pages }}.
+                    </span>
+                    <ul class="list-style-none flex">
+                        <li>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="{% if not paginator.has_previous %} 'pointer-events-none' {% endif %} pointer-events-none relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white">
+                                Previous
+                            </a>
+                        </li>
+                        {% for page in paginator.page_range %}
+                            <li>
+                                <a href="#" class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <a href="?page={{ paginator.next_page_number }}" class="{% if not jobs.has_next %} 'pointer-events-none' {% endif %} relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
