@@ -21,7 +21,7 @@ from .views import index, tools
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', index, name='home'),
-    path('tools', tools, name='tools'),
+    # path('', index, name='home'),
+    path('', include('dashboard.urls')),
     path('harvest/', include('harvest.urls'))
 ]
