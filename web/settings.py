@@ -42,6 +42,7 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     # 'django.contrib.admin',
+    'dashboard.apps.DashboardConfig',
     'harvest.apps.HarvestConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
